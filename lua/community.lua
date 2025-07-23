@@ -13,4 +13,5 @@ return {
   { import = "astrocommunity.code-runner.molten-nvim" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
   { import = "astrocommunity.bars-and-lines.lualine-nvim" },
+  { import = "astrocommunity.media.image-nvim" },
 }
