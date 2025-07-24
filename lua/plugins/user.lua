@@ -9,11 +9,6 @@
 -- package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
 
 
-local adapter = {
-  adapter = "ollama",
-  model = "qwen2.5-coder",
-}
-
 ---@type LazySpec
 return {
   {
@@ -47,19 +42,42 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "hrsh7th/nvim-cmp", -- Optional: For using slash commands and variables in the chat buffer
-      "nvim-telescope/telescope.nvim", -- Optional: For using slash commands
-      { "stevearc/dressing.nvim", opts = {} },
+      "hrsh7th/nvim-cmp",                      -- Optional: For using slash commands and variables in the chat buffer
+      "nvim-telescope/telescope.nvim",         -- Optional: For using slash commands
+      { "stevearc/dressing.nvim", opts = {} }, -- Optional: Improves `vim.ui.select`
     },
-    opts = {
-      strategies = {
-        chat = adapter,
-        inline = adapter,
-        agent = adapter,
-      },
-      opts = {
-        log_level = "DEBUG",
-      },
-    },
+    config = function()
+      require("codecompanion").setup({
+        strategies = {
+          chat = {
+            adapter = "ollama",
+          },
+          inline = {
+            adapter = "ollama",
+          },
+          agent = {
+            adapter = "ollama",
+          },
+        },
+        adapters = {
+          ollama = function()
+            return require("codecompanion.adapters").extend("ollama", {
+              name = "qwen2.5-coder:3b",
+              schema = {
+                model = {
+                  default = "qwen2.5-coder:3b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                num_predict = {
+                  default = -1,
+                },
+              },
+            })
+          end,
+        },
+      })
+    end
   },
 }
