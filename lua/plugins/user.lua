@@ -28,6 +28,15 @@ return {
     "rafamadriz/friendly-snippets"
   },
   {
+    "mrsobakin/multilayout.nvim",
+    opts = {
+      layouts = {
+        ru = "ru",
+      },
+      use_libukb = false,
+    }
+  },
+  {
     "NotAShelf/direnv.nvim",
     event = "VeryLazy",
     config = function()
@@ -77,14 +86,14 @@ return {
           http = {
             ollama = function()
               return require("codecompanion.adapters").extend("ollama", {
-                name = "qwen3:4b",
+                name = "qwen3:8b",
                 opts = {
                   vision = false,
                   stream = true,
                 },
                 schema = {
                   model = {
-                    default = "qwen3:4b",
+                    default = "qwen3:8b",
                   },
                   num_ctx = {
                     default = 16384,
