@@ -28,6 +28,20 @@ return {
     "rafamadriz/friendly-snippets"
   },
   {
+    "NotAShelf/direnv.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("direnv").setup({
+        -- Optional: Automatically allow new .envrc files when prompted
+        autoload_direnv = true,
+        -- Optional: Add a statusline indicator
+        statusline = {
+          enabled = true,
+        },
+      })
+    end,
+  },
+  {
     "jpalardy/vim-slime",
     init = function()
       vim.g.slime_target = "neovim"
@@ -55,27 +69,30 @@ return {
           inline = {
             adapter = "ollama",
           },
-          agent = {
+        agent = {
             adapter = "ollama",
           },
         },
         adapters = {
-          ollama = function()
-            return require("codecompanion.adapters").extend("ollama", {
-              name = "qwen2.5-coder:3b",
-              schema = {
-                model = {
-                  default = "qwen2.5-coder:3b",
+          http = {
+            ollama = function()
+              return require("codecompanion.adapters").extend("ollama", {
+                name = "qwen3:4b",
+                opts = {
+                  vision = false,
+                  stream = true,
                 },
-                num_ctx = {
-                  default = 16384,
+                schema = {
+                  model = {
+                    default = "qwen3:4b",
+                  },
+                  num_ctx = {
+                    default = 16384,
+                  },
                 },
-                num_predict = {
-                  default = -1,
-                },
-              },
-            })
-          end,
+              })
+            end,
+          },
         },
       })
     end
