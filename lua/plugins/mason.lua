@@ -10,21 +10,25 @@ return {
     -- overrides `require("mason-lspconfig").setup(...)`
     opts = {
       ensure_installed = {
-        "lua_ls",
-        "pyright",
+        -- "lua_ls",
+        "basedpyright",
         "ruff",
         -- add more arguments for adding more language servers
       },
+      automatic_installation = {
+        exclude = { "pylsp", "pyright", "jedi_language_server" },
+      },
     },
   },
-  -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
   {
     "jay-babu/mason-null-ls.nvim",
-    -- overrides `require("mason-null-ls").setup(...)`
     opts = {
-      ensure_installed = {
-        "stylua",
-        -- add more arguments for adding more null-ls sources
+      methods = {
+        diagnostics = false, -- Отключаем диагностику через null-ls для скорости
+        formatting = false,   -- Отключаем форматирование через null-ls
+      },
+      automatic_installation = {
+        exclude = { "ruff", "black", "isort", "flake8", "pylint" },
       },
     },
   },

@@ -40,13 +40,30 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      "pyright",
-      "ruff",
       "basedpyright",
+      "ruff",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              ignore = { "*" },
+              typeCheckingMode = "basic",
+              diagnosticMode = "openFilesOnly",
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      },
+      ruff = {
+        -- Отключаем hover у Ruff, чтобы использовать hover от Basedpyright
+        on_attach = function(client, bufnr)
+          client.server_capabilities.hoverProvider = false
+        end,
+      },
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },
     -- customize how language servers are attached

@@ -8,10 +8,12 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.pack.python" },
-  { import = "astrocommunity.markdown-and-latex.markview-nvim" },
+  { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
   { import = "astrocommunity.remote-development.remote-sshfs-nvim" },
   { import = "astrocommunity.code-runner.molten-nvim" },
   { import = "astrocommunity.file-explorer.oil-nvim" },
   { import = "astrocommunity.bars-and-lines.lualine-nvim" },
   { import = "astrocommunity.media.image-nvim" },
+  { import = "astrocommunity.completion.nvim-cmp" },
+  { import = "astrocommunity.pack.yaml" },
 }
