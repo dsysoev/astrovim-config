@@ -16,4 +16,5 @@ return {
   { import = "astrocommunity.media.image-nvim" },
   { import = "astrocommunity.completion.nvim-cmp" },
   { import = "astrocommunity.pack.yaml" },
+  { import = "astrocommunity.snippet.nvim-snippets" },
 }

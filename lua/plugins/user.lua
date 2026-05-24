@@ -57,7 +57,8 @@ return {
       vim.g.slime_cell_delimiter = "# %%"
       vim.g.slime_bracketed_pastes = 1
       vim.g.slime_python_ipython = 1
-      vim.api.nvim_set_keymap('n', '<leader>mm', "<Plug>SlimeSendCell", { noremap = true, silent = true });
+      vim.api.nvim_set_keymap('n', '<leader>mm', "<Plug>SlimeSendCell", { noremap = true, silent = true, desc = "Run Current Cell" });
+      vim.api.nvim_set_keymap('n', '<leader>ma', ":%SlimeSend<CR>", { noremap = true, silent = true, desc = "Select All and Run" });
     end,
   },
   {
@@ -93,7 +94,7 @@ return {
                 },
                 schema = {
                   model = {
-                    default = "qwen2.5-coder:1.5b-base-q8_0",
+                    default = "qwen3.5:0.8b",
                   },
                   num_ctx = {
                     default = 16384,
@@ -117,6 +118,12 @@ return {
       local cmp = require("cmp")
 
       cmp.setup({
+        -- Настройка отображения сниппетов в cmp
+        snippet = {
+          expand = function(args)
+            vim.snippet.expand(args.body) -- Нативный метод Neovim 0.10+
+          end,
+        },
         -- Настройка отображения (иконки)
         formatting = {
           format = function(entry, vim_item)
@@ -142,7 +149,7 @@ return {
 
         -- Источники данных (Порядок важен!)
         sources = cmp.config.sources({
-          -- { name = "minuet" },   -- ИИ на первом месте
+          { name = "snippets" },   -- ИИ на первом месте
           { name = "path" },     -- Пути к файлам
           { name = "nvim_lsp" }, -- Подсказки сервера (типы, методы)
         }, {
