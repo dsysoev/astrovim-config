@@ -74,30 +74,54 @@ return {
       require("codecompanion").setup({
         strategies = {
           chat = {
-            adapter = "ollama",
+            adapter = "local_ollama",
           },
           inline = {
-            adapter = "ollama",
+            adapter = "local_ollama",
           },
-        agent = {
-            adapter = "ollama",
+          agent = {
+            adapter = "local_ollama",
+          },
+        },
+        opts = {
+          tools = {
+            ["web_search"] = {
+              adapter = "duckduckgo",
+            },
           },
         },
         adapters = {
           http = {
-            ollama = function()
+            local_ollama = function()
               return require("codecompanion.adapters").extend("ollama", {
-                name = "qwen2.5-coder",
+                name = "gemma4-16k-agentic:latest",
                 opts = {
                   vision = false,
                   stream = true,
                 },
                 schema = {
                   model = {
-                    default = "qwen3.5:0.8b",
+                    default = "gemma4-16k-agentic:latest",
                   },
                   num_ctx = {
                     default = 16384,
+                  },
+                },
+              })
+            end,
+
+            remote_ollama = function()
+              return require("codecompanion.adapters").extend("ollama", {
+                name = "gemma4:31b",
+                env = {
+                  url = "http://192.168.1.40:11434",
+                },
+                schema = {
+                  model = {
+                    default = "gemma4:31b",
+                  },
+                  num_ctx = {
+                    default = 32768,
                   },
                 },
               })
